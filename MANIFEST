@@ -1,0 +1,17 @@
+Changes
+lib/Apache2/ExplorerDestroyer.pm
+lib/Apache2/ExplorerDestroyer.pod
+lib/Apache2/ExplorerDestroyer/Level1.pm
+lib/Apache2/ExplorerDestroyer/Level2.pm
+lib/Apache2/ExplorerDestroyer/Level3.pm
+Makefile.PL
+MANIFEST
+README
+t/Apache2-ExplorerDestroyer.t
+t/conf/extra.last.conf.in
+t/htdocs/test.html
+t/htdocs/test.inc
+t/htdocs/test2.html
+t/htdocs/test3.html
+t/TEST.PL
+META.yml                                 Module meta-data (added by MakeMaker)

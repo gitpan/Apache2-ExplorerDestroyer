@@ -1,0 +1,65 @@
+
+PerlSwitches -I@ServerRoot@/../lib -I@ServerRoot@/../t/tlib
+PerlLoadModule Apache2::ExplorerDestroyer::Level1
+PerlLoadModule Apache2::ExplorerDestroyer::Level2
+PerlLoadModule Apache2::ExplorerDestroyer::Level3
+
+<VirtualHost Apache2::ExplorerDestroyer::Level1::Default>
+  <Files "*.html">
+      PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level1->handler
+  </Files>
+</VirtualHost>
+
+<VirtualHost Apache2::ExplorerDestroyer::Level1::Specified>
+  <Files "*.html">
+      PerlSetVar                GoogleScriptFile        @DocumentRoot@/test.inc
+      PerlOutputFilterHandler   Apache2::ExplorerDestroyer::Level1->handler
+  </Files>
+</VirtualHost>
+
+<VirtualHost Apache2::ExplorerDestroyer::Level1::PhoneHome>
+  <Files "*.html">
+      PerlSetVar                ExplorerDestroyerPhoneHome      1
+      PerlOutputFilterHandler   Apache2::ExplorerDestroyer::Level1->handler
+  </Files>
+</VirtualHost>
+
+<VirtualHost Apache2::ExplorerDestroyer::Level2::Default>
+  <Files "*.html">
+      PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level2->handler
+  </Files>
+</VirtualHost>
+
+<VirtualHost Apache2::ExplorerDestroyer::Level2::Specified>
+  <Files "*.html">
+      PerlSetVar                GoogleScriptFile        @DocumentRoot@/test.inc
+      PerlOutputFilterHandler   Apache2::ExplorerDestroyer::Level2->handler
+  </Files>
+</VirtualHost>
+
+<VirtualHost Apache2::ExplorerDestroyer::Level2::PhoneHome>
+  <Files "*.html">
+      PerlSetVar                ExplorerDestroyerPhoneHome      1
+      PerlOutputFilterHandler   Apache2::ExplorerDestroyer::Level2->handler
+  </Files>
+</VirtualHost>
+
+<VirtualHost Apache2::ExplorerDestroyer::Level3::Default>
+  <Files "*.html">
+      PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level3->handler
+  </Files>
+</VirtualHost>
+
+<VirtualHost Apache2::ExplorerDestroyer::Level3::Specified>
+  <Files "*.html">
+      PerlSetVar                GoogleScriptFile        @DocumentRoot@/test.inc
+      PerlOutputFilterHandler   Apache2::ExplorerDestroyer::Level3->handler
+  </Files>
+</VirtualHost>
+
+<VirtualHost Apache2::ExplorerDestroyer::Level3::PhoneHome>
+  <Files "*.html">
+      PerlSetVar                ExplorerDestroyerPhoneHome      1
+      PerlOutputFilterHandler   Apache2::ExplorerDestroyer::Level3->handler
+  </Files>
+</VirtualHost>

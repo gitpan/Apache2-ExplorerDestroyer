@@ -1,0 +1,6 @@
+Revision history for Perl extension Apache2::ExplorerDestroyer.
+
+0.01  Thu Jan  5 18:23:47 2006
+	- original version; created by h2xs 1.23 with options
+		-AXP -b 5.6.0 -n Apache2::ExplorerDestroyer
+

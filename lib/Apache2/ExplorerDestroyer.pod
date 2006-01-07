@@ -1,0 +1,126 @@
+=pod
+
+=head1 NAME
+
+Apache2::ExplorerDestroyer - Kill Bill's Browser with Google AdSense
+
+=head1 SYNOPSIS
+
+  PerlSetVar GoogleScriptFile /home/johndoe/public_html/firefox_ad.inc
+
+  # files that aren't index.* are explorerdestroyer.com level 1 pages
+  <FilesMatch "(?:(?!index).....|^.{0,4})\.">
+    PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level1->handler
+  </FilesMatch>
+
+  # files that are index.* are explorerdestroyer.com level 2 pages
+  <Files "index.*">
+      PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level2->handler
+  </Files>
+
+=head1 DESCRIPTION
+
+C<Apache2::ExplorerDestroyer> provides three Apache filter modules which
+help you add the three Explorer Destroyer scripts to your site. When
+somebody connects to your website using Microsoft Internet Explorer,
+these filters will encourage them to switch to Mozilla Firefox with Google
+Toolbar.
+
+You should have a Google AdSense account to take full advantage of
+this; for each user that you convert to FireFox, Google can give you up to
+$1, so you can help save the planet and make some dough at the same time!
+
+=begin html
+
+<div align="center">
+<script type="text/javascript"><!--
+google_ad_client = "pub-7961868379679320";
+google_ad_width = 180;
+google_ad_height = 60;
+google_ad_format = "180x60_as_rimg";
+google_cpa_choice = "CAAQ4fqy0gEaCPI0fZSM10VxKL3D93M";
+//--></script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
+=end html
+
+See L<http://www.explorerdestroyer.com/> and L<http://adsense.google.com/>
+for more information.
+
+=head1 HOW TO USE THIS MODULE
+
+=over
+
+=item Create a file on your harddrive containing your AdSense button
+
+The google adsense website lets you pick one of several buttons to use
+in the campaign. Place the button's HTML (typically two sets of
+C<script> tags) in a file on your webserver's harddrive.
+
+=item Tell C<Apache2::ExplorerDestroyer> where to find this file
+
+In C<httpd.conf>, add:
+
+  PerlSetVar GoogleScriptFile /path/to/your/google/ad.inc
+
+=item Apply the filter where you want
+
+Eg; This would add a firefox banner to the top of every .html page when
+seen in M$IE:
+
+  <Files "*.html">
+    PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level1->handler
+  </Files>
+  
+The three handlers are as follows:
+
+=over
+
+=item PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level1->handler
+
+Serves the "Level 1" explorer destroyer: an advertisement running accross
+the top of your page.
+
+=item PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level2->handler
+
+Serves the "Level 2" explorer destroyer: an advertisement that replaces
+your page, with a "continue without firefox" button.
+
+=item PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level3->handler
+
+Serves the "Level 3" explorer destroyer: an advertisement that replaces
+your page, locking people out if they are using internet explorer.
+
+=back
+
+See L<http://www.explorerdestroyer.com/> for a more complete description
+with demonstrations.
+
+=item Congratulations
+
+You are now helping to spread firefox!
+
+=back
+
+=head1 AUTHOR
+
+The Explorer Destroyer concept and JavaScript were written in 2005 by
+the team at L<http://www.explorerdestroyer.com/>,
+Holmes, Nick, Tiffiniy <tyc@explorerdestroyer.com>, and Nicholas.
+
+The mod_perl2 filter component was written in 2006 by
+Tyler "Crackerjack" MacDonald <japh@crackerjack.net>.
+
+=head1 LICENSE
+
+This is free software; you may redistribute it under the same terms as
+perl itself.
+
+=head1 SEE ALSO
+
+L<Apache2::Filter>, L<http://www.explorerdestroyer.com/>, 
+L<http://www.spreadfirefox.com/>, L<http://www.google.com/adsense>.
+
+=cut
