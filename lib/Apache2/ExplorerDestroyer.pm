@@ -12,7 +12,7 @@ use APR::Brigade ();
 use APR::Table ();
 use Apache2::Const qw(OK DECLINED);
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 return 1;
 

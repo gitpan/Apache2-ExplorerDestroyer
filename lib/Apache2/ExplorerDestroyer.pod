@@ -104,6 +104,10 @@ You are now helping to spread firefox!
 
 =back
 
+=head1 NOTE
+
+This is a pole for perl.
+
 =head1 AUTHOR
 
 The Explorer Destroyer concept and JavaScript were written in 2005 by

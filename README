@@ -1,40 +1,89 @@
-Apache2-ExplorerDestroyer version 0.01
-======================================
+NAME
+    Apache2::ExplorerDestroyer - Kill Bill's Browser with Google AdSense
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+SYNOPSIS
+      PerlSetVar GoogleScriptFile /home/johndoe/public_html/firefox_ad.inc
 
-A README file is required for CPAN modules since CPAN extracts the
-README file from a module distribution so that people browsing the
-archive can use it get an idea of the modules uses. It is usually a
-good idea to provide version information here so that people can
-decide whether fixes for the module are worth downloading.
+      # files that aren't index.* are explorerdestroyer.com level 1 pages
+      <FilesMatch "(?:(?!index).....|^.{0,4})\.">
+        PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level1->handler
+      </FilesMatch>
 
-INSTALLATION
+      # files that are index.* are explorerdestroyer.com level 2 pages
+      <Files "index.*">
+          PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level2->handler
+      </Files>
 
-To install this module type the following:
+DESCRIPTION
+    "Apache2::ExplorerDestroyer" provides three Apache filter modules which
+    help you add the three Explorer Destroyer scripts to your site. When
+    somebody connects to your website using Microsoft Internet Explorer,
+    these filters will encourage them to switch to Mozilla Firefox with
+    Google Toolbar.
 
-   perl Makefile.PL
-   make
-   make test
-   make install
+    You should have a Google AdSense account to take full advantage of this;
+    for each user that you convert to FireFox, Google can give you up to $1,
+    so you can help save the planet and make some dough at the same time!
 
-DEPENDENCIES
+    See <http://www.explorerdestroyer.com/> and <http://adsense.google.com/>
+    for more information.
 
-This module requires these other modules and libraries:
+HOW TO USE THIS MODULE
+    Create a file on your harddrive containing your AdSense button
+        The google adsense website lets you pick one of several buttons to
+        use in the campaign. Place the button's HTML (typically two sets of
+        "script" tags) in a file on your webserver's harddrive.
 
-  blah blah blah
+    Tell "Apache2::ExplorerDestroyer" where to find this file
+        In "httpd.conf", add:
 
-COPYRIGHT AND LICENCE
+          PerlSetVar GoogleScriptFile /path/to/your/google/ad.inc
 
-Put the correct copyright and licence information here.
+    Apply the filter where you want
+        Eg; This would add a firefox banner to the top of every .html page
+        when seen in M$IE:
 
-Copyright (C) 2006 by Tyler MacDonald
+          <Files "*.html">
+            PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level1->handler
+          </Files>
+  
+        The three handlers are as follows:
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.7 or,
-at your option, any later version of Perl 5 you may have available.
+        PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level1->handler
+            Serves the "Level 1" explorer destroyer: an advertisement
+            running accross the top of your page.
 
+        PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level2->handler
+            Serves the "Level 2" explorer destroyer: an advertisement that
+            replaces your page, with a "continue without firefox" button.
+
+        PerlOutputFilterHandler Apache2::ExplorerDestroyer::Level3->handler
+            Serves the "Level 3" explorer destroyer: an advertisement that
+            replaces your page, locking people out if they are using
+            internet explorer.
+
+        See <http://www.explorerdestroyer.com/> for a more complete
+        description with demonstrations.
+
+    Congratulations
+        You are now helping to spread firefox!
+
+NOTE
+    This is a pole for perl.
+
+AUTHOR
+    The Explorer Destroyer concept and JavaScript were written in 2005 by
+    the team at <http://www.explorerdestroyer.com/>, Holmes, Nick, Tiffiniy
+    <tyc@explorerdestroyer.com>, and Nicholas.
+
+    The mod_perl2 filter component was written in 2006 by Tyler
+    "Crackerjack" MacDonald <japh@crackerjack.net>.
+
+LICENSE
+    This is free software; you may redistribute it under the same terms as
+    perl itself.
+
+SEE ALSO
+    Apache2::Filter, <http://www.explorerdestroyer.com/>,
+    <http://www.spreadfirefox.com/>, <http://www.google.com/adsense>.
 
