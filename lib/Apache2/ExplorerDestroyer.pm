@@ -12,7 +12,12 @@ use APR::Brigade ();
 use APR::Table ();
 use Apache2::Const qw(OK DECLINED);
 
-our $VERSION = "0.02";
+our $VERSION = "0.03";
+
+our @bots = map { qr{$_}i } qw(
+    googlebot jeeves htdic lycos_ slurp architext appie harvest linkwalker
+    msnbox netcraft
+);
 
 return 1;
 
@@ -153,9 +158,20 @@ sub build_context {
     return $context;
 }
 
+sub is_bot {
+    my($class, $ua) = @_;
+    return 1 if grep { $ua =~ m{$_} } @bots;
+    return 0;
+}
+
 sub handler {
     my($class, $f) = @_;
     my $context = $f->ctx || $class->build_context($f);
+    my $r = $f->r;
+    
+    if(my $ua = $r->headers_in->{'User-Agent'}) {
+        return DECLINED if($class->is_bot($ua));
+    }
     
     my($buffer, $google_script, $google_script_error, $phone_home) = @$context;
     

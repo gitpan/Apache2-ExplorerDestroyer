@@ -1,5 +1,9 @@
 Revision history for Perl extension Apache2::ExplorerDestroyer.
 
+0.03  Thu Jul 27 14:52:00 2006
+        - Added support for not displaying ExplorerDestroyer code to
+          web bots.
+
 0.02  Fri Mar 17 12:16:00 2006
         - distribute a sane README
 

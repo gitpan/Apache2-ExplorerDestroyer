@@ -34,7 +34,8 @@ foreach my $level (1 .. $Levels) {
         my $location = Apache::TestRequest::hostport($config);
         while(my($file, $file_re) = each(%File_Matches)) {
             my $uri = "http://$location/$file";
-            push(@Test_Plan, [ $uri, $vhost, $level, { level => $level_re, vhost => $vhost_re, body_tag => $file_re } ]);
+            push(@Test_Plan, [ $uri, "Crawler", 1, $vhost, $level, { level => $level_re, vhost => $vhost_re, body_tag => $file_re } ]);
+            push(@Test_Plan, [ $uri, "GoogleBot", 0, $vhost, $level, { level => $level_re, vhost => $vhost_re, body_tag => $file_re } ]);
         }
     }
 }
@@ -42,10 +43,15 @@ foreach my $level (1 .. $Levels) {
 plan tests => (scalar(@Test_Plan) * 3);
 
 while(my $plan = shift @Test_Plan) {
-    my($uri, $vhost, $level, $tests) = @$plan;
+    my($uri, $ua, $want, $vhost, $level, $tests) = @$plan;
+    Apache::TestRequest::user_agent(reset => 1, agent => $ua);
     my $data = GET_BODY $uri;
     while(my($k, $v) = each(%$tests)) {
-        my $test_name = "$uri\[$vhost/$level]: $k";
-        like($data, $v, $test_name);
+        my $test_name = "$uri\[$ua/$want/$vhost/$level]: $k";
+        if($want) {
+            like($data, $v, $test_name);
+        } else {
+            unlike($data, $v, $test_name);
+        }
     }
 }
